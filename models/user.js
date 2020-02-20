@@ -1,10 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define("User", {
-     annotation_id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true
-        },
+    //  annotation_id: {
+    //         type: DataTypes.INTEGER,
+    //         autoIncrement: true,
+    //         primaryKey: true
+    //     },
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,

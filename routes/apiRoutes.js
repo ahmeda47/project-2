@@ -29,13 +29,15 @@ module.exports = function(app) {
 
   });
   //API Route for ask question
-  app.get("/api/ask-question",function(req,res){
+  app.get("/api/buildQuestion",function(req,res){
     res.sendFile("../public/buildQuestion.html");
   });
   // Api Route to post question data into database
-  app.post("/api/ask-question",function(req,res){
-    db.Question.create(req.body.Title, req.body.Body).then(function(dbQuestion){
-      res.json(dbQuestion);
-    });
+  app.post("/api/buildQuestion",function(req,res){
+    // db.Question.create(req.body.Title, req.body.body).then(function(dbQuestion){
+    //   res.json(dbQuestion);
+    // });
+
+    console.log('hello')
   })
 }
