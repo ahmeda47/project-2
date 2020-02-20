@@ -99,6 +99,20 @@ module.exports = function(app) {
   passport.serializeUser(function(user_id, done) {
     done(null, user_id);
   });
+  //API Route for ask question
+  app.get("/api/buildQuestion",function(req,res){
+    res.sendFile("../public/buildQuestion.html");
+  });
+  // Api Route to post question data into database
+  app.post("/api/buildQuestion",function(req,res){
+    // db.Question.create(req.body.Title, req.body.body).then(function(dbQuestion){
+    //   res.json(dbQuestion);
+    // });
+
+    console.log('hello')
+  })
+}
+=======
 
   passport.deserializeUser(function(user_id, done) {
     done(null, user_id);
