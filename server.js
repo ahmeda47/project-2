@@ -1,9 +1,15 @@
 const express = require("express");
-require("dotenv").config();
+const session = require("express-session");
+const passport = require("passport");
+const bcrypt = require("bcrypt");
+
 // Sets up the Express App
 // =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
+// const passport = require("passport");
+
+const LocalStrategy = require("passport-local").Strategy;
 
 // Requiring our models for syncing
 var db = require("./models");
@@ -15,9 +21,52 @@ app.use(express.json());
 // Static directory
 app.use(express.static("public"));
 
+//session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+//comparing login to signup
+
+passport.use(
+  new LocalStrategy(function(username, password, done) {
+    console.log(username);
+    console.log(password);
+    db.User.findAll({ where: { username: username } }, function(
+      err,
+      results,
+      fields
+    ) {
+      if (err) {
+        done(err);
+      }
+      if (results.length === 0) {
+        done(null, false);
+      }
+      return done(null, false);
+    }).then(function(res) {
+      console.log(res[0].dataValues.password);
+      const hash = res[0].dataValues.password;
+      bcrypt.compare(password, hash, function(err, response) {
+        if (response === true) {
+          return done(null, { annotation_id: res[0].dataValues.annotation_id });
+        } else {
+          return done(null, false);
+        }
+      });
+    });
+  })
+);
+
 // Routes
 // =============================================================
-// require("./routes/apiRoutes.js")(app);
+require("./routes/apiRoutes.js")(app);
 require("./routes/htmlRoutes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
