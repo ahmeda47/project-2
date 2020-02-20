@@ -1,11 +1,11 @@
 // $(document).ready(function() {
 //     // Getting jQuery references to the question body, title and  form
-    var codeInput = $("#code");
-    var titleInput = $("#title");
-    // var QForm = $("#qForm");
-    // var submit = $('#btn-submit');
+var codeInput = $("#code");
+var titleInput = $("#title");
+// var QForm = $("#qForm");
+// var submit = $('#btn-submit');
 $('#btn-submit').on('click', function(event){
-  event.preventDefault();
+event.preventDefault();
 console.log('hello')
 
 // var obj = {title:titleInput.value, body: codeInput.value }
@@ -15,13 +15,13 @@ console.log('hello')
 //   data: obj
 // })
 var newQuestion = {
-             title: titleInput.val().trim(),
-            body: codeInput.val().trim()
-          };
-       
-          $.post("/api/buildQuestion", newQuestion, function() {
-           window.location.href = "/buidQuestion";
-        });
+         title: titleInput.val().trim(),
+        body: codeInput.val().trim()
+      };
+   
+      $.post("/buildQuestion", newQuestion, function() {
+       window.location.href = "/buidQuestion";
+    });
 
 })
 // })
@@ -58,5 +58,5 @@ var newQuestion = {
 //         $.post("/api/buildQuestion", newQuestion, function() {
 //           window.location.href = "/buidQuestion";
 //         });
-      
+  
 // });
