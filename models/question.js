@@ -11,36 +11,16 @@ module.exports = function(sequelize, DataTypes) {
         validate: {
           len: [5]
         }
-      },
-      userName: {
-            type: DataTypes.STRING,
-            references: {
-                model: 'User',
-                key: 'id'
-            }
-      },
-      email:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        validate:{
-            len:[1]
-        }
-    },
-      userName: {
-          type:DataTypes.STRING,
-          allowNull:false,
-          validate:{
-          len:[6]
-          }
-      },
-      Password:{
-          type:DataTypes.STRING,
-          allowNull:false,
-          validate:{
-              len:[8]
-          }
-      },
-      });
+    //   },
+    //   userName: {
+    //     type: DataTypes.STRING,
+    //     references: {
+    //         model: 'User',
+    //         key: 'id'
+    //     }
+    // }
+      }
+    });
     return Question;
 }
   
