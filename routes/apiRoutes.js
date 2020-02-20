@@ -1,30 +1,41 @@
 var db = require("../models");
 
 module.exports = function(app) {
-//   app.get("/", function(req, res) {
-//     // 1. Add a join to include all of each Author's Posts
-    
-//       res.sendFile("index.html");
-//     });
+//Root Route
+  app.get("/", function(req, res) {
+      res.sendFile("index.html");
+    });
   
-
+// API Route for login 
   app.get("/api/login", function(req, res) {
     res.sendFile("login.html");
-    //   dbUsers.findOne({
-    //     where:{
-    //       userName:req.body.userName
-    //     }
-    //   })
-    // });
-  });
+      dbUsers.findOne({
+        where:{
+          userName:req.body.userName
+        }
+      })
+    });
+
+  // API Route for Signup
   app.get("/api/signup", function(req,res){
     res.sendFile("../public/signup.html");
   });
 
-  // app.post("/api/signup", function(req, res) {
-  //   db.Users.create(req.body).then(function(dbUsers) {
-  //     res.json(dbUsers);
-  //   });
+  //Post User data to database
+  app.post("/api/signup", function(req, res) {
+    db.Users.create(req.body).then(function(dbUsers) {
+      res.json(dbUsers);
+    });
 
-  // });
+  });
+  //API Route for ask question
+  app.get("/api/ask-question",function(req,res){
+    res.sendFile("../public/buildQuestion.html");
+  });
+  // Api Route to post question data into database
+  app.post("/api/ask-question",function(req,res){
+    db.Question.create(req.body.Title, req.body.Body).then(function(dbQuestion){
+      res.json(dbQuestion);
+    });
+  })
 }
