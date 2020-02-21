@@ -41,6 +41,11 @@ module.exports = function(app) {
       failureRedirect: "/login"
     })
   );
+  app.get("/logout", function(req, res) {
+    req.logout();
+    req.session.destroy();
+    res.redirect("/");
+  });
 
   passport.serializeUser(function(user_id, done) {
     done(null, user_id);
