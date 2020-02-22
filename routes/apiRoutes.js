@@ -6,12 +6,45 @@ const path = require("path");
 require("dotenv").config();
 
 module.exports = function(app) {
-  app.get("/buildquestion", authenticationMiddleware(), function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
-    console.log(req.user);
-    console.log(req.isAuthenticated());
-  });
+//   app.get("/buildquestion", authenticationMiddleware(), function(req, res) {
+//     res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
+//     console.log(req.user);
+//     console.log(req.isAuthenticated());
+//   });
+  app.post("/buildquestion",function(req,res){
+    db.Question.create(req.body).then(function(dbQuestion){
+      res.json(dbQuestion);
+    });
 
+    console.log('hello')
+  });
+  app.get("/api/getquestions", function(req,res){
+    db.Question.findAll({
+      // include: [db.User]
+    }).then(function(dbQuestion) {
+      res.json(dbQuestion);
+    });
+  });
+  app.get("/getquestions/:id", function(req,res){
+    db.Question.findOne({
+      where: {
+        id: req.params.id
+      },
+      // include: [db.User]
+    }).then(function(dbQuestion) {
+      res.json(dbQuestion);
+    });
+  })
+
+
+  app.get("/buildquestion", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
+    // console.log(req.user);
+    // console.log(req.isAuthenticated());
+  });
+  app.get("/getquestions",function(req,res){
+    res.sendFile(path.join(__dirname, "../public/getAnswers.html"));
+  });
   app.post("/signup", function(req, res) {
     console.log(req.body);
 
@@ -51,17 +84,9 @@ module.exports = function(app) {
     done(null, user_id);
   });
   //API Route for ask question
-  app.get("/api/buildQuestion", function(req, res) {
+  app.get("/api/buildquestion", function(req, res) {
     res.sendFile("../public/buildQuestion.html");
-  });
-  // Api Route to post question data into database
-  app.post("/api/buildQuestion", function(req, res) {
-    // db.Question.create(req.body.Title, req.body.body).then(function(dbQuestion){
-    //   res.json(dbQuestion);
-    // });
-
-    console.log("hello");
-  });
+  });  
 
   // post request to add chat information to chats table in database
   app.post("/api/post", function (req, res) {
