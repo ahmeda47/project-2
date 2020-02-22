@@ -1,64 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link src="./style.css" />
-    <title>Document</title>
-
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.js"
-      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <h1>Type your Question</h1>
-    <div class="container hidden">
-      <div class="row top-30">
-        <div class="col-md-2 col-sm-2">
-          <a class="btn btn-light" href="/getQuestion">Get all Questions</a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 offset-md-3">
-          <form id="qForm">
-            <div class="form-group">
-              <label for="title">Title:</label>
-              <input
-                placeholder="Question"
-                type="text"
-                class="form-control"
-                id="title"
-              />
-              <br />
-              <label for="body">Body:</label>
-              <textarea
-                placeholder="Enter your code .."
-                class="form-control"
-                rows="10"
-                id="code"
-              ></textarea>
-              <br />
-              <button
-                type="submit"
-                class="btn btn-success submit"
-                id="btn-submit"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-        <a href="/logout"><button>logout</button></a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link src= "./style.css">
+	<title>Document</title>
+	
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <h1>Type your Question</h1>
+  <div class="container hidden">
+		<div class="row top-30">
+      
+      <div class="col-md-2 col-sm-2">
+        <a class="btn btn-light" href="/getquestions">Get all Questions</a>
       </div>
     </div>
-    <script src="./js/buildQ.js" type="text/javascript"></script>
-  </body>
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<form id="qForm">
+					<div class="form-group">
+						<label for="title">Title:</label>
+						<input placeholder="Question" type="text" class="form-control" id="title">
+						<br />
+						<label for="body">Body:</label>
+						<textarea placeholder="Enter your code .." class="form-control" rows="10" id="body"></textarea>
+						<br/>
+						<button type="submit" class="btn btn-success submit" id="btn-submit">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="./js/build.js" type="text/javascript"></script>
+</body>
 </html>
