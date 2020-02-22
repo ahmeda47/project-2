@@ -6,12 +6,55 @@ const path = require("path");
 require("dotenv").config();
 
 module.exports = function(app) {
-  app.get("/buildquestion", authenticationMiddleware(), function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
-    console.log(req.user);
-    console.log(req.isAuthenticated());
+//   app.get("/buildquestion", authenticationMiddleware(), function(req, res) {
+//     res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
+//     console.log(req.user);
+//     console.log(req.isAuthenticated());
+//   });
+  app.post("/buildquestion",function(req,res){
+    db.Question.create(req.body).then(function(dbQuestion){
+      res.json(dbQuestion);
+    });
+
+    console.log('hello')
+  });
+  app.get("/api/getquestions", function(req,res){
+    db.Question.findAll({
+      // include: [db.User]
+    }).then(function(dbQuestion) {
+      res.json(dbQuestion);
+    });
+  });
+  app.get("/getquestions/:id", function(req,res){
+    db.Question.findOne({
+      where: {
+        id: req.params.id
+      },
+      // include: [db.User]
+    }).then(function(dbQuestion) {
+      res.json(dbQuestion);
+    });
   });
 
+  app.delete("/getquestions/:id", function(req, res) {
+    db.Question.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbQuestion) {
+      res.json(dbQuestion);
+    });
+  });
+
+
+  app.get("/buildquestion", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
+    // console.log(req.user);
+    // console.log(req.isAuthenticated());
+  });
+  app.get("/getquestions",function(req,res){
+    res.sendFile(path.join(__dirname, "../public/getAnswers.html"));
+  });
   app.post("/signup", function(req, res) {
     console.log(req.body);
 
@@ -51,17 +94,55 @@ module.exports = function(app) {
     done(null, user_id);
   });
   //API Route for ask question
-  app.get("/api/buildQuestion", function(req, res) {
+  app.get("/api/buildquestion", function(req, res) {
     res.sendFile("../public/buildQuestion.html");
-  });
-  // Api Route to post question data into database
-  app.post("/api/buildQuestion", function(req, res) {
-    // db.Question.create(req.body.Title, req.body.body).then(function(dbQuestion){
-    //   res.json(dbQuestion);
-    // });
+  });  
 
-    console.log("hello");
-  });
+  // post request to add chat information to chats table in database
+  app.post("/api/post", function (req, res) {
+
+    console.log(req.body)
+    db.Chat.create({
+        sender: req.body.sender,
+        reciever: req.body.reciever,
+        chats: req.body.chat
+    }).then(function (dbUser) {
+
+    });
+});
+
+// post request for retrieving chats between 2 users 
+app.post("/api/chats", function (req, res) {
+    var chatsArr = []
+    db.Chat.findAll({
+        where: {
+            reciever: req.body.reciever,
+            sender: req.body.sender, 
+            // $or: [{reciever: req.body.reciever, sender: req.body.sender}, {reciever: req.body.sender,
+            //   sender: req.body.reciever}] 
+
+            
+        }
+    })
+        .then(function (dbChat) {
+            for (var i = 0; i < dbChat.length; i++) {
+                chatsArr.push(dbChat[i])
+            }
+            res.end(JSON.stringify(chatsArr));
+        });
+});
+
+// post request for creating an array of users that we can use for the chat
+app.post("/api/users", function (req, res) {
+    var arr = []
+    db.User.findAll().then(function (dbUser) {
+        for (var i = 0; i < dbUser.length; i++) {
+            arr.push(dbUser[i].firstName)
+        }
+        res.end(JSON.stringify(arr));
+        console.log(arr)
+    });
+});
 };
 
 passport.deserializeUser(function(user_id, done) {
