@@ -1,3 +1,8 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
 .jumbotron1 {
   background-image: url("../images/jumbotron.jpg");
   background-size: 100% 120%;
@@ -18,4 +23,16 @@
   background-color: black;
   height: 200px;
   margin-bottom: 0;
+}
+/* .borderbox {
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px;
+} */
+
+.profile-row {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
