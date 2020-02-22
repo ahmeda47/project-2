@@ -3,7 +3,8 @@ $(document).ready(function() {
   
     //questionContainer holds all of our questions
     var questionContainer = $(".question-container");
-   
+
+   $(document).on("click", "button.delete", handleQuestionDelete);
     var askQuestion = $('#btn-question');
     $(askQuestion).on('click', getQuestions)
     // Variable to hold our questions
@@ -40,16 +41,16 @@ $(document).ready(function() {
       });
     }
   
-    // This function does an API call to delete question
-    // function deleteQuestion(id) {
-    //   $.ajax({
-    //     method: "DELETE",
-    //     url: "/api/posts/" + id
-    //   })
-    //     .then(function() {
-    //       getPosts(postCategorySelect.val());
-    //     });
-    // }
+    //This function does an API call to delete question
+    function deleteQuestion(id) {
+        $.ajax({
+          method: "DELETE",
+          url: "/getquestions/" + id
+        })
+          .then(function() {
+            getQuestions();
+          });
+      }
   
     // InitializeRows handles appending all of our constructed post HTML inside questionContainer
     function initializeRows() {
@@ -103,14 +104,14 @@ $(document).ready(function() {
       return newQCard;
     }
   
-    // This function figures out which post we want to delete and then calls deletePost
-    // function handleQuestionDelete() {
-    //   var currentQuestion = $(this)
-    //     .parent()
-    //     .parent()
-    //     .data("question");
-    //   deleteQuestion(currentQuestion.id);
-    // }
+    //This function figures out which post we want to delete and then calls deleteQuestion
+    function handleQuestionDelete() {
+      var currentQuestion = $(this)
+        .parent()
+        .parent()
+        .data("question");
+      deleteQuestion(currentQuestion.id);
+    }
   
     // This function figures out which post we want to edit and takes it to the appropriate url
     // function handleQuestionEdit() {
