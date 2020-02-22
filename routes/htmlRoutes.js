@@ -17,18 +17,9 @@ module.exports = function(app) {
   app.get("/buildQuestion", function(req,res){
     res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
   });
-  // app.post("/buildQuestion",function(req,res){
-  //    const newQuestion = {
-  //      Title:res.body.Title,
-  //      Body: res.body.Body
-  //    } 
-  //   console.log(newQuestion);
-  // });
-
-
-  // app.get("/buildquestion", function(req, res) {
-  //   res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
-  // });
+  app.get("/getquestions",function(req,res){
+    res.sendFile(path.join(__dirname, "../public/getAnswers.html"));
+  });
 
   app.get("/chat", function(req,res){
     res.sendFile(path.join(__dirname, "../public/chat.html"));

@@ -11,6 +11,18 @@ module.exports = function(app) {
     console.log(req.user);
     console.log(req.isAuthenticated());
   });
+  app.post("/buildquestion",function(req,res){
+    db.Question.create(req.body).then(function(dbQuestion){
+      res.json(dbQuestion);
+    });
+  });
+  app.get("/api/getquestions", function(req,res){
+    db.Question.findAll({
+      // include: [db.User]
+    }).then(function(dbQuestion) {
+      res.json(dbQuestion);
+    });
+  });
 
   app.post("/signup", function(req, res) {
     console.log(req.body);
