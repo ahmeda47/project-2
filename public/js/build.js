@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Getting jQuery references to the question  body, title, form 
   var bodyInput = $("#body");
-  var titleInput = $("#title");s
+  var titleInput = $("#title");
   var qForm = $("#qForm");
   
 
