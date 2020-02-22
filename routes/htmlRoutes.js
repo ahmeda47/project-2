@@ -29,4 +29,8 @@ module.exports = function(app) {
   // app.get("/buildquestion", function(req, res) {
   //   res.sendFile(path.join(__dirname, "../public/buildQuestion.html"));
   // });
+
+  app.get("/chat", function(req,res){
+    res.sendFile(path.join(__dirname, "../public/chat.html"));
+  });
 };
