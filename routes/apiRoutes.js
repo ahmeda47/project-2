@@ -34,7 +34,17 @@ module.exports = function(app) {
     }).then(function(dbQuestion) {
       res.json(dbQuestion);
     });
-  })
+  });
+
+  app.delete("/getquestions/:id", function(req, res) {
+    db.Question.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbQuestion) {
+      res.json(dbQuestion);
+    });
+  });
 
 
   app.get("/buildquestion", function(req, res) {
