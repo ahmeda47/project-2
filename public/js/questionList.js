@@ -3,9 +3,8 @@ $(document).ready(function() {
   
     //questionContainer holds all of our questions
     var questionContainer = $(".question-container");
-    
-    $(document).on("click", "button.delete", handleQuestionDelete);
-   
+
+   $(document).on("click", "button.delete", handleQuestionDelete);
     var askQuestion = $('#btn-question');
     $(askQuestion).on('click', getQuestions)
     // Variable to hold our questions
@@ -52,7 +51,7 @@ $(document).ready(function() {
             getQuestions();
           });
       }
-    
+  
     // InitializeRows handles appending all of our constructed post HTML inside questionContainer
     function initializeRows() {
       questionContainer.empty();
@@ -104,13 +103,16 @@ $(document).ready(function() {
       newQCard.data("question", question);
       return newQCard;
     }
+  
+    //This function figures out which post we want to delete and then calls deleteQuestion
     function handleQuestionDelete() {
-        var currentQuestion = $(this)
-          .parent()
-          .parent()
-          .data("question");
-        deleteQuestion(currentQuestion.id);
-      }
+      var currentQuestion = $(this)
+        .parent()
+        .parent()
+        .data("question");
+      deleteQuestion(currentQuestion.id);
+    }
+  
     // This function figures out which post we want to edit and takes it to the appropriate url
     // function handleQuestionEdit() {
     //   var currentQuestion = $(this)
