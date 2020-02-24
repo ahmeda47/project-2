@@ -5,17 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link src= "./style.css">
-	<title>Document</title>
-	
+	<title>Document</title>	
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
 </head>
 <body>
-  <h1>Type your Question</h1>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">Devit</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		  <div class="navbar-nav">
+			<a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+			<a class="nav-item nav-link" href="/getquestions">Questions</a>
+			<a class="nav-item nav-link" href="/chat">Chat</a>
+		  </div>
+		</div>
+	  </nav>
+  <h1 id="questionheader">Got a question? Ask the devit community!</h1>
   <div class="container hidden">
 		<div class="row top-30">
       
       <div class="col-md-2 col-sm-2">
-        <a class="btn btn-light" href="/getquestions">Get all Questions</a>
+        <a class="btn btn-dark" href="/getquestions">Get all Questions</a>
       </div>
     </div>
 		<div class="row">

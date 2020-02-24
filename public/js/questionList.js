@@ -6,6 +6,7 @@ $(document).ready(function() {
   $(document).on("click", ".answer-button", handleAnswerPost);
   $(document).on("click", ".view-answers", getAnswers);
   $(document).on("click", ".hide-answers", hideAnswers);
+  $(document).on("click", "button.edit", handleQuestionEdit);
   function hideAnswers() {
     $(".answer-div").hide();
   }
@@ -87,14 +88,14 @@ $(document).ready(function() {
     newQCard.addClass("card");
     var newQCardHeading = $("<div>");
     newQCardHeading.addClass("card-header");
-    var deleteBtn = $("<button>");
+    var deleteBtn = $("<button style=float:right>");
     deleteBtn.text("x");
     deleteBtn.addClass("delete btn btn-danger");
-    var editBtn = $("<button>");
+    var editBtn = $("<button style=float:right>");
     editBtn.text("EDIT");
     editBtn.addClass("edit btn btn-info");
     var newQTitle = $("<h2>");
-    var newQDate = $("<small>");
+    var newQDate = $("<br/><h6 style=float:right>");
     var newQ = $("<h5>");
     //   newPostAuthor.text("Written by: " + question.Title);
     //   newPostAuthor.css({
@@ -158,13 +159,13 @@ $(document).ready(function() {
     deleteQuestion(currentQuestion.id);
   }
   // This function figures out which post we want to edit and takes it to the appropriate url
-  // function handleQuestionEdit() {
-  //   var currentQuestion = $(this)
-  //     .parent()
-  //     .parent()
-  //     .data("question");
-  //   window.location.href = "/buildquestion?question_id=" + currentQuestion.id;
-  // }
+  function handleQuestionEdit() {
+    var currentQuestion = $(this)
+      .parent()
+      .parent()
+      .data("question");
+    window.location.href = "/buildquestion?question_id=" + currentQuestion.id;
+  }
   // This function displays a message when there are no posts
   function displayEmpty(id) {
     var query = window.location.search;
