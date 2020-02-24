@@ -99,13 +99,14 @@ db.sequelize.sync().then(function () {
     // });
 
     socket.on('typing', data => {
-
-      socket.broadcast.emit('typing', data)
+      io.sockets.connected[clients[data.reciever].socket].emit("typing", data);
+      // socket.broadcast.emit('typing', data)
     });
 
     socket.on('private-message', data => {
       io.sockets.connected[clients[data.to].socket].emit("private-message", data);
       io.sockets.connected[clients[data.handle].socket].emit("private-message", data);
+      
     });
 
   });
