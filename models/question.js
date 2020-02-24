@@ -1,21 +1,19 @@
 module.exports = function(sequelize, DataTypes) {
-    var Question = sequelize.define("Question", {
-    
-      Title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          len: [5]
-        }
-      },
+  var Question = sequelize.define("Question", {
 
-      Code: {
-      type: DataTypes.TEXT,
-      allowNull :false    
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1]
       }
-    
-    });
-    return Question;
+    },
+    body: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      len: [1]
+    }
+  
+  });
+  return Question;
 }
-  
-  
