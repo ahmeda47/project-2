@@ -36,6 +36,25 @@ module.exports = function(app) {
     });
   });
 
+  app.post('/api/user', function(req, res) {
+    console.log(req.user);
+    
+
+    db.User.findAll({
+      where: {
+         annotation_id: req.user.annotation_id
+          
+      }
+    }).then(function(loggedIn){
+      console.log(loggedIn[0].dataValues.firstName)
+      res.end(loggedIn[0].dataValues.firstName);
+       
+
+      })
+ 
+
+  })
+
   app.delete("/getquestions/:id", function(req, res) {
     db.Question.destroy({
       where: {
@@ -55,6 +74,7 @@ module.exports = function(app) {
   app.get("/getquestions",function(req,res){
     res.sendFile(path.join(__dirname, "../public/getAnswers.html"));
   });
+  
   app.post("/signup", function(req, res) {
     console.log(req.body);
 
@@ -114,22 +134,41 @@ module.exports = function(app) {
 // post request for retrieving chats between 2 users 
 app.post("/api/chats", function (req, res) {
     var chatsArr = []
-    db.Chat.findAll({
-        where: {
-            reciever: req.body.reciever,
-            sender: req.body.sender, 
-            // $or: [{reciever: req.body.reciever, sender: req.body.sender}, {reciever: req.body.sender,
-            //   sender: req.body.reciever}] 
+
+  
+
+    db.sequelize.query("SELECT * FROM Chats WHERE (sender = '" + req.body.sender + "' AND reciever = '" + req.body.reciever + "') OR (sender = '" + req.body.reciever + "' AND reciever = '" + req.body.sender + "')"
+      
+    ,{ type: db.Sequelize.QueryTypes.SELECT }).then(function(dbChat){
+      
+      // for (var i = 0; i < dbChat.length; i++) {
+      //               chatsArr.push(dbChat[i])
+      //           }
+      //           console.log(chatsArr)
+      console.log(dbChat)
+                res.end(JSON.stringify(dbChat));
+    });
+
+
+    // db.Chat.findAll({
+    //     where: {
+    //         reciever: req.body.reciever,
+    //         sender: req.body.sender, 
+    //         // $or: [{reciever: req.body.reciever, sender: req.body.sender}, {reciever: req.body.sender,
+    //         //   sender: req.body.reciever}] 
+
+
+              
 
             
-        }
-    })
-        .then(function (dbChat) {
-            for (var i = 0; i < dbChat.length; i++) {
-                chatsArr.push(dbChat[i])
-            }
-            res.end(JSON.stringify(chatsArr));
-        });
+    //     }
+    // })
+    //     .then(function (dbChat) {
+    //         for (var i = 0; i < dbChat.length; i++) {
+    //             chatsArr.push(dbChat[i])
+    //         }
+    //         res.end(JSON.stringify(chatsArr));
+    //     });
 });
 
 // post request for creating an array of users that we can use for the chat

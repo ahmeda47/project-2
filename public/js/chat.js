@@ -10,44 +10,63 @@ var to = document.getElementById('to');
 var save = document.getElementById('save');
 var chat = document.getElementById('chat')
 var buttons = document.getElementsByClassName("buttons")
+var body = document.getElementById('balls');
 
 var testArr = []
+var senderArr =[]
 
 // Emit events
 
-save.addEventListener("click", () => {
-    var username = handle.value
-    socket.emit("add-user", { "username": username });
-
-    var id = { sender: handle.value, reciever: testArr[0], chat: message.value }
-
-    $.ajax({
+window.onload = () => {
+    $.get({
         type: "POST",
-        url: "/api/post",
-        data: id
+        url: "/api/user",    
     }
-    );
+    ).then(function(response) {
+        console.log(response)
+        senderArr.push(response)
+        var username = senderArr[0]
+        socket.emit("add-user", { "username": username });
+        
+        
+    }).fail(function(err) {
+        console.log(err)
+    });
+};
+
+// save.addEventListener("click", () => {
+//     var username = senderArr[0]
+//     socket.emit("add-user", { "username": username });
+
+//     var id = { sender: senderArr[0], reciever: testArr[0], chat: message.value }
+
+//     $.ajax({
+//         type: "POST",
+//         url: "/api/post",
+//         data: id
+//     }
+//     );
 
 
 
 
-});
+// });
 
 send.addEventListener("click", (event) => {
 
     event.preventDefault();
     socket.emit('chat', {
         message: message.value,
-        handle: handle.value
+        handle: senderArr[0]
     });
 
     socket.emit("private-message", {
         message: message.value,
-        handle: handle.value,
+        handle: senderArr[0],
         to: testArr[0]
     });
 
-    var id = { sender: handle.value, reciever: testArr[0], chat: message.value }
+    var id = { sender: senderArr[0], reciever: testArr[0], chat: message.value }
 
     $.ajax({
         type: "POST",
@@ -56,11 +75,12 @@ send.addEventListener("click", (event) => {
     }
     );
 
+
 });
 
 
 message.addEventListener("keypress", () => {
-    socket.emit('typing', handle.value)
+    socket.emit('typing', senderArr[0])
 })
 
 
@@ -88,10 +108,12 @@ chat.addEventListener("click", (event) => {
                 document.body.appendChild(btn);               // Append <button> to <body>
                 btn.className = "buttons";
                 btn.onclick = function () {
-                    var username = handle.value
-                    socket.emit("add-user", { "username": username });
-                    var userData = { reciever: this.innerHTML, sender: handle.value }
+                   
 
+                    var username = senderArr[0]
+                    socket.emit("add-user", { "username": username });
+                    var userData = { reciever: this.innerHTML, sender: senderArr[0]}
+                    
 
                     testArr = [this.innerHTML]
 
@@ -105,8 +127,9 @@ chat.addEventListener("click", (event) => {
                         url: "/api/chats",
                         data: userData,
                         success: function (response) {
-                            console.log(response)
+                            
                             var chats = JSON.parse(response)
+                            console.log(chats)
 
                                 // Removes an element from the document
                             $( ".chats" ).remove();
@@ -116,7 +139,7 @@ chat.addEventListener("click", (event) => {
                                 var listItem = document.createElement("LI")
                                 listItem.innerHTML = chats[i].sender + " says: " + chats[i].chats;     
                                 listItem.className = "chats";             
-                                 document.body.appendChild(listItem);
+                                 $("#output").append(listItem);
                             }
                           
                             
@@ -142,7 +165,9 @@ socket.on('chat', data => {
 
 socket.on('private-message', data => {
     feedback.innerHTML = ""
-    output.innerHTML += `<p><strong> ${data.handle} </strong> ${data.message} </p>`
+    // output.innerHTML += `<p><strong> ${data.handle} </strong> ${data.message} </p>`
+    $("#output").append(`<li class="chats">${data.handle} says: ${data.message}</li>`);
+    
 })
 
 socket.on('typing', data => {
