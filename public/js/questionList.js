@@ -80,13 +80,13 @@ $(document).ready(function() {
       var newQTitle = $("<h2>");
       var newQDate = $("<br/><h6 style=float:right>");
       var newQ = $("<h5>");
-    //   newPostAuthor.text("Written by: " + question.Title);
-    //   newPostAuthor.css({
-    //     float: "right",
-    //     color: "blue",
-    //     "margin-top":
-    //     "-10px"
-    //   });
+      newQ.text("Written by: " + question.User.username);
+      newQ.css({
+        float: "right",
+        color: "blue",
+        "margin-top":
+        "-10px"
+      });
       var newQCardBody = $("<div>");
       newQCardBody.addClass("card-body");
       var newQBody = $("<p>");
