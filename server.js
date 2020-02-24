@@ -89,6 +89,7 @@ db.sequelize.sync().then(function () {
     socket.on('add-user', function (data) {
       clients[data.username] = {
         "socket": socket.id
+
       };
       console.log(clients)
     });
@@ -104,6 +105,7 @@ db.sequelize.sync().then(function () {
 
     socket.on('private-message', data => {
       io.sockets.connected[clients[data.to].socket].emit("private-message", data);
+      io.sockets.connected[clients[data.handle].socket].emit("private-message", data);
     });
 
   });
