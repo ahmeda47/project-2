@@ -15,8 +15,12 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Question.associate = function(models) {
-    Question.hasMany(models.Answer, {
-      onDelete: "cascade"
+    // We're saying that a Question should belong to an User
+    // A Question can't be created without an User due to the foreign key constraint
+    Question.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
     });
   };
   return Question;
