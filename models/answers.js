@@ -9,9 +9,9 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Answer.associate = function(models) {
-    Answer.belongsTo(models.Question, { foreign_key: { allowNull: false } });
-  };
+  // Answer.associate = function(models) {
+  //   Answer.belongsTo(models.Question, { foreign_key: { allowNull: false } });
+  // };
 
   return Answer;
 };
