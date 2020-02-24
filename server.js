@@ -37,10 +37,10 @@ app.use(passport.session());
 //comparing login to signup
 
 passport.use(
-  new LocalStrategy(function (username, password, done) {
+  new LocalStrategy(function(username, password, done) {
     console.log(username);
     console.log(password);
-    db.User.findAll({ where: { username: username } }, function (
+    db.User.findAll({ where: { username: username } }, function(
       err,
       results,
       fields
@@ -52,10 +52,10 @@ passport.use(
         done(null, false);
       }
       return done(null, false);
-    }).then(function (res) {
+    }).then(function(res) {
       console.log(res[0].dataValues.password);
       const hash = res[0].dataValues.password;
-      bcrypt.compare(password, hash, function (err, response) {
+      bcrypt.compare(password, hash, function(err, response) {
         if (response === true) {
           return done(null, { annotation_id: res[0].dataValues.annotation_id });
         } else {
@@ -73,41 +73,41 @@ require("./routes/htmlRoutes.js")(app);
 
 // Syncing our sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync({force:false}).then(function () {
-  var server = app.listen(PORT, function () {
+
+db.sequelize.sync({ force: true }).then(function() {
+  var server = app.listen(PORT, function() {
     console.log(`connected to http://localhost:${PORT}`);
   });
 
   // Socket setup
   var io = socket(server);
 
-  io.on('connection', function (socket) {
+  io.on("connection", function(socket) {
     console.log(`made socket connection`, socket.id);
 
     //listen for chat message
 
-    socket.on('add-user', function (data) {
+    socket.on("add-user", function(data) {
       clients[data.username] = {
-        "socket": socket.id
 
+        "socket": socket.id
       };
-      console.log(clients)
+      console.log(clients);
     });
 
     // socket.on('chat', data =>{
     //     io.sockets.emit('chat', data);
     // });
 
-    socket.on('typing', data => {
-
-      socket.broadcast.emit('typing', data)
+    socket.on("typing", data => {
+      socket.broadcast.emit("typing", data);
     });
+
 
     socket.on('private-message', data => {
       io.sockets.connected[clients[data.to].socket].emit("private-message", data);
       io.sockets.connected[clients[data.handle].socket].emit("private-message", data);
     });
-
   });
 });
 

@@ -1,6 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
   var Question = sequelize.define("Question", {
-
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -13,8 +12,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       len: [1]
     }
-  
   });
+
   Question.associate = function(models) {
     // We're saying that a Question should belong to an User
     // A Question can't be created without an User due to the foreign key constraint
@@ -25,4 +24,4 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
   return Question;
-}
+};
